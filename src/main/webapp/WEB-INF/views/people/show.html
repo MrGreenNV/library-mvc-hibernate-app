@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница абонента</title>
+</head>
+<body>
+
+<p th:text="${person.getFullName() + ', ' + person.getYearOfBirthday()}">VALUE</p>
+
+<p th:if="${#lists.isEmpty(books)}">Абонент пока не взял ни одной книги</p>
+
+<hr th:if="${not #lists.isEmpty(books)}"/>
+
+<div th:if="${not #lists.isEmpty(books)}" th:each="book : ${books}">
+    <a th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfRealize()}"></a>
+</div>
+
+<hr/>
+
+<a th:href="@{/people/{id}/edit(id=${person.getId()})}">
+    <input type="submit" value="Редактировать">
+</a>
+
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+
+</body>
+</html>
