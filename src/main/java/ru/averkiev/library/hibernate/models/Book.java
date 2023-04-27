@@ -1,19 +1,42 @@
-package ru.averkiev.library.model;
+package ru.averkiev.library.hibernate.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.Date;
+
+@Entity
+@Table(name = "Book")
 public class Book {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Title not should be empty!")
+    @Column(name = "title")
     private String title;
 
     @NotEmpty(message = "Author not should be empty!")
+    @Column(name = "author")
     private String author;
 
     @Min(value = 1700, message = "Year should be between 1700 and 2023 character")
     @Max(value = 2023, message = "Year should be between 1700 and 2023 character")
+    @Column(name = "yearofrealize")
     private int yearOfRealize;
+
+    @Column(name = "received_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date receivedIn;
+
+    @ManyToOne()
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person abonent;
+
+    @Transient
+    private boolean isOverdue;
 
     public Book(int id, String title, String author, int yearOfRealize) {
         this.id = id;
@@ -57,4 +80,11 @@ public class Book {
         this.yearOfRealize = yearOfRealize;
     }
 
+    public Date getReceivedIn() {
+        return receivedIn;
+    }
+
+    public void setReceivedIn(Date receivedIn) {
+        this.receivedIn = receivedIn;
+    }
 }

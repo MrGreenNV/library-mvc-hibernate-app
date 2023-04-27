@@ -1,22 +1,31 @@
-package ru.averkiev.library.model;
+package ru.averkiev.library.hibernate.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
 import java.util.List;
 
+@Entity
+@Table(name = "Person")
 public class Person {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Pattern(regexp = "([A-Z][a-z]+|[А-Я][а-я]+) ([A-Z][a-z]+|[А-Я][а-я]+) ([A-Z][a-z]+|[А-Я][а-я]+)", message = "The FullName should be like this: Lastname Firstname Patronymic")
     @Size(min = 8, max = 100, message = "The Fullname should be fuller")
     @NotEmpty(message = "The FullName not should be empty")
+    @Column(name = "fullname")
     private String fullName;
 
     @Min(value = 1900, message = "Year should be between 1900 and 2017 character")
     @Max(value = 2017, message = "Year should be between 1900 and 2017 character")
+    @Column(name = "yearofbirthday")
     private int yearOfBirthday;
 
-    private List<Book> listBooks = null;
+    @OneToMany(mappedBy = "abonent")
+    private List<Book> books;
 
     public Person(int id, String fullName, int date) {
         this.id = id;
@@ -51,11 +60,11 @@ public class Person {
         this.yearOfBirthday = yearOfBirthday;
     }
 
-    public List<Book> getListBooks() {
-        return listBooks;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setListBooks(List<Book> listBooks) {
-        this.listBooks = listBooks;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

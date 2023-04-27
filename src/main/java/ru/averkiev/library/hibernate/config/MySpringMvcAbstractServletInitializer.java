@@ -1,4 +1,4 @@
-package ru.averkiev.library.config;
+package ru.averkiev.library.hibernate.config;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterRegistration;
