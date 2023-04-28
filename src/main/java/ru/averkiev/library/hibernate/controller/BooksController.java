@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.averkiev.library.hibernate.models.Book;
 import ru.averkiev.library.hibernate.models.Person;
 import ru.averkiev.library.hibernate.services.BooksService;
+import ru.averkiev.library.hibernate.services.PeopleService;
 import ru.averkiev.library.hibernate.util.BookValidator;
 
 @Controller
@@ -16,11 +17,13 @@ import ru.averkiev.library.hibernate.util.BookValidator;
 public class BooksController {
 
     private final BooksService booksService;
+    private final PeopleService peopleService;
     private final BookValidator bookValidator;
 
     @Autowired
-    public BooksController(BooksService booksService, BookValidator bookValidator) {
+    public BooksController(BooksService booksService, PeopleService peopleService, BookValidator bookValidator) {
         this.booksService = booksService;
+        this.peopleService = peopleService;
         this.bookValidator = bookValidator;
     }
 
@@ -31,10 +34,18 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String show(@ModelAttribute("person") Person person, @PathVariable("id") int id, Model bookModel, Model personModel, Model peopleModel) {
-        bookModel.addAttribute("book", booksService.findById(id));
-//        personModel.addAttribute("personIs", bookDAO.isFreeBook(id));
-//        peopleModel.addAttribute("people", bookDAO.getPeople());
+    public String show(@ModelAttribute("person") Person person, @PathVariable("id") int id, Model model) {
+
+        Book book = booksService.findById(id);
+        Person abonent = book.getAbonent();
+
+        model.addAttribute("book", book);
+
+        if (abonent == null) {
+            model.addAttribute("people", peopleService.findAll());
+        } else {
+            model.addAttribute("abonent", abonent);
+        }
         return "books/show";
     }
 
@@ -81,13 +92,13 @@ public class BooksController {
 
     @PatchMapping("/{id}/add")
     public String addBook(@ModelAttribute("person") Person person, @PathVariable("id") int bookId) {
-//        bookDAO.addBook(person.getId(), bookId);
+        booksService.addBook(person, bookId);
         return "redirect:/books";
     }
 
     @PatchMapping("/{id}/rm")
     public String rmBook(@PathVariable("id") int bookId) {
-//        bookDAO.rmBook(bookId);
+        booksService.rmBook(bookId);
         return "redirect:/books";
     }
 }

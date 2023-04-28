@@ -87,4 +87,28 @@ public class Book {
     public void setReceivedIn(Date receivedIn) {
         this.receivedIn = receivedIn;
     }
+
+    public Person getAbonent() {
+        return abonent;
+    }
+
+    public void setAbonent(Person abonent) {
+        this.abonent = abonent;
+    }
+
+    public boolean isOverdue() {
+        return isOverdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        isOverdue = overdue;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                '}';
+    }
 }

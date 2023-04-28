@@ -9,30 +9,30 @@
 <!--    Вывод названия книги    -->
 <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfRealize()}"></p>
 
+<!--    Реализация списка если книга свободны   -->
+<div th:if="${people}">
+    <span>Эта книга свободна. Кому назначить её?</span>
+    <form th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
+        <label for="person">Выберите человека: </label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">TEXT</option>
+        </select>
+        <input type="submit" value="Назначить книгу">
+    </form>
 
+</div>
 
-<!--    Реализация списка    если книга назначена   -->
-<form th:if="${personIs == null}" th:method="PATCH" th:action="@{/books/{id}/add(id=${book.getId()})}">
-    <p>Эта книга свободна. Кому назначить её?</p>
-    <label for="person">Выберите человека: </label>
-
-    <select th:object="${person}" th:field="*{id}" id="person">
-        <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">TEXT</option>
-    </select>
-
-    <input type="submit" value="Назначить книгу">
-</form>
-
-<!--    Если книга не назначена    -->
-<form th:if="${ not (personIs == null)}" th:method="PATCH" th:action="@{/books/{id}/rm(id=${book.getId()})}">
-    <p th:text="'Книга сейчас у: ' + ${personIs.getFullName()}">TEXT</p>
-
-    <input type="submit" value="Освободить книгу">
-</form>
+<!--    Если книга назначена    -->
+<div th:if="${abonent}">
+    <span th:text="'Книга сейчас у: ' + ${abonent.getFullName()}">TEXT</span>
+    <form  th:method="PATCH" th:action="@{/books/{id}/rm(id=${book.getId()})}">
+        <input type="submit" value="Освободить книгу">
+    </form>
+</div>
 
 <hr/>
 
-<form th:href="@{/books/{id}/edit(id=${book.getId()})}">
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
     <input type="submit" value="Редактировать">
 </form>
 

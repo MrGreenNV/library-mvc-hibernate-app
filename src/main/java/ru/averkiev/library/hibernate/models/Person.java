@@ -2,6 +2,7 @@ package ru.averkiev.library.hibernate.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -66,5 +67,15 @@ public class Person {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", yearOfBirthday=" + yearOfBirthday +
+                ", books=" + books +
+                '}';
     }
 }
