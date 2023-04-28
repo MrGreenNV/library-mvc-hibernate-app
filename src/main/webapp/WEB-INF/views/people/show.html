@@ -12,8 +12,10 @@
 
 <hr th:if="${not #lists.isEmpty(books)}"/>
 
-<div th:if="${not #lists.isEmpty(books)}" th:each="book : ${books}">
-    <a th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfRealize()}"></a>
+<div th:if="${not #lists.isEmpty(books)}">
+    <b>Книги:</b>
+    <br/>
+    <div th:each="book : ${books}" th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYearOfRealize()}"></div>
 </div>
 
 <hr/>

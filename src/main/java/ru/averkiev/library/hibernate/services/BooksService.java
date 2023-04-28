@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.averkiev.library.hibernate.models.Book;
+import ru.averkiev.library.hibernate.models.Person;
 import ru.averkiev.library.hibernate.repositories.BooksRepository;
 
 import java.util.List;
@@ -41,5 +42,9 @@ public class BooksService {
     @Transactional
     public void delete(int id) {
         booksRepository.deleteById(id);
+    }
+
+    public List<Book> findByAbonent(Person abonent) {
+        return booksRepository.findByAbonent(abonent);
     }
 }

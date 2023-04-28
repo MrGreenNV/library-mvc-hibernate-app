@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.averkiev.library.hibernate.models.Person;
+import ru.averkiev.library.hibernate.services.BooksService;
 import ru.averkiev.library.hibernate.services.PeopleService;
 import ru.averkiev.library.hibernate.util.PersonValidator;
 
@@ -16,11 +17,13 @@ public class PeopleController {
 
     private final PersonValidator personValidator;
     private final PeopleService peopleService;
+    private final BooksService booksService;
 
     @Autowired
-    public PeopleController(PersonValidator personValidator, PeopleService peopleService) {
+    public PeopleController(PersonValidator personValidator, PeopleService peopleService, BooksService booksService) {
         this.personValidator = personValidator;
         this.peopleService = peopleService;
+        this.booksService = booksService;
     }
 
     @GetMapping()
@@ -30,9 +33,9 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model personModel, Model bookModel) {
-        personModel.addAttribute("person", peopleService.findOne(id));
-//        bookModel.addAttribute("books", personDAO.getBooks(id));
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("person", peopleService.findOne(id));
+        model.addAttribute("books", booksService.findByAbonent(peopleService.findOne(id)));
         return "people/show";
     }
 
