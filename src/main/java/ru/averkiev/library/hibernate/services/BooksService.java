@@ -54,7 +54,11 @@ public class BooksService {
 
     @Transactional
     public void update(int id, Book updateBook) {
+        Book book = booksRepository.findById(id).get();
+
         updateBook.setId(id);
+        updateBook.setAbonent(book.getAbonent());
+
         booksRepository.save(updateBook);
     }
 
@@ -105,8 +109,6 @@ public class BooksService {
     }
 
     public List<Book> findByTitleStartWith(String startTitle) {
-        List<Book> books =  booksRepository.findByTitleStartingWith(startTitle);
-        System.out.println(books);
-        return books;
+        return booksRepository.findByTitleStartingWith(startTitle);
     }
 }

@@ -7,6 +7,7 @@ import ru.averkiev.library.hibernate.models.Person;
 import ru.averkiev.library.hibernate.repositories.PeopleRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,6 +42,10 @@ public class PeopleService {
     @Transactional
     public void delete(int id) {
         peopleRepository.deleteById(id);
+    }
+
+    public Optional<Person> getPersonByFullName(String fullName) {
+        return peopleRepository.findByFullName(fullName);
     }
 
 }

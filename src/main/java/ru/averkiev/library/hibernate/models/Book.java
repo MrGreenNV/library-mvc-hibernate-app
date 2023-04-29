@@ -38,8 +38,7 @@ public class Book {
     @Transient
     private boolean isOverdue;
 
-    public Book(int id, String title, String author, int yearOfRealize) {
-        this.id = id;
+    public Book(String title, String author, int yearOfRealize) {
         this.title = title;
         this.author = author;
         this.yearOfRealize = yearOfRealize;

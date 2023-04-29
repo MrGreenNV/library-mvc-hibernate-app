@@ -28,8 +28,7 @@ public class Person {
     @OneToMany(mappedBy = "abonent")
     private List<Book> books;
 
-    public Person(int id, String fullName, int date) {
-        this.id = id;
+    public Person(String fullName, int date) {
         this.fullName = fullName;
         this.yearOfBirthday = date;
     }

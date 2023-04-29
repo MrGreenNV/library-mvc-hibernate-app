@@ -32,6 +32,7 @@ import java.util.Properties;
 @EnableJpaRepositories("ru.averkiev.library.hibernate.repositories")
 @PropertySource("classpath:hibernate.properties")
 public class SpringConfig implements WebMvcConfigurer {
+
     private final ApplicationContext applicationContext;
     private final Environment environment;
 

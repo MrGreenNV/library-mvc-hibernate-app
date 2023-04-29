@@ -33,17 +33,14 @@ public class BooksController {
                         @RequestParam(value = "sort_by_year", required = false) String isSort, Model model) {
 
         if (page != null && booksPerPage !=null && (isSort != null && isSort.equals("true"))) {
-            System.out.println("1");
             model.addAttribute("books", booksService.findAll(page, booksPerPage, "yearOfRealize"));
             return "books/index";
         }
         if (page != null && booksPerPage !=null && isSort == null) {
-            System.out.println("2");
             model.addAttribute("books", booksService.findAll(page, booksPerPage));
             return "books/index";
         }
         if ((page == null || booksPerPage == null) && (isSort != null && isSort.equals("true"))) {
-            System.out.println("3");
             model.addAttribute("books", booksService.findAll("yearOfRealize"));
             return "books/index";
         }
