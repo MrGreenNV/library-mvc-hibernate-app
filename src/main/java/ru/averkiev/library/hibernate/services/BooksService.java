@@ -103,4 +103,10 @@ public class BooksService {
 
         booksRepository.save(book);
     }
+
+    public List<Book> findByTitleStartWith(String startTitle) {
+        List<Book> books =  booksRepository.findByTitleStartingWith(startTitle);
+        System.out.println(books);
+        return books;
+    }
 }
